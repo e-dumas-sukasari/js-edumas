@@ -1,4 +1,4 @@
-export let UrlRegister = `https://asia-southeast2-argon-fire-401902.cloudfunctions.net/postRegisterEDUMAS`
-export let UrlLogin = `https://asia-southeast2-argon-fire-401902.cloudfunctions.net/postLoginEDUMAS`
-export let UrlSubmitReport ='https://asia-southeast2-argon-fire-401902.cloudfunctions.net/postReportEDUMAS'
+export let UrlRegister = `https://asia-southeast2-gisiqbal.cloudfunctions.net/User-Register`
+export let UrlLogin = `https://asia-southeast2-gisiqbal.cloudfunctions.net/Admin-Login`
+export let UrlSubmitReport ='https://asia-southeast2-gisiqbal.cloudfunctions.net/Insert-Report'
 export let token = 'token';
