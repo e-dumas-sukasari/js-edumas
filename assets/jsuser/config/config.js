@@ -2,7 +2,7 @@ import { setCookieWithExpireHour } from 'https://jscroot.github.io/cookie/croot.
 
 //token
 export function getTokenFromAPI() {
-  const tokenUrl = "https://asia-southeast2-gisiqbal.cloudfunctions.net/Admin-Login";
+  const tokenUrl = "https://asia-southeast2-gisiqbal.cloudfunctions.net/User-Login";
   fetch(tokenUrl)
     .then(response => response.json())
     .then(tokenData => {
@@ -44,7 +44,7 @@ export function PostLogin() {
 
 export function AlertPost(value){
     alert(value.message + "\nRegistrasi Berhasil")
-    window.location.href= "https://e-dumas-sukasari.my.id/sign/login"
+    window.location.href= "https://e-dumas-sukasari.my.id/sign/login_user"
 }
 
 
@@ -52,7 +52,7 @@ function ResponsePostLogin(response) {
   if (response && response.token) {
     // console.log('Token User:', response.token);
     setCookieWithExpireHour('Login', response.token, 2);
-    window.location.href = 'https://e-dumas-sukasari.my.id/dashboard/admin.html';
+    window.location.href = 'https://e-dumas-sukasari.my.id/dashboard/user.html';
 
     
     alert("Selamat Datang")
