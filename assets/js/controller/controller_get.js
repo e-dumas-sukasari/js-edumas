@@ -83,7 +83,7 @@ const getTokenFromCookies = (cookieName) => {
           title: 'Success',
           text: 'Report deleted successfully!',
         }).then(() => {
-          getAllEmployees()
+          getAllDelete()
         })
       } else {
         Swal.fire({
