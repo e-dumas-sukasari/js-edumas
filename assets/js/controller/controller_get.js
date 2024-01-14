@@ -77,7 +77,7 @@ const getTokenFromCookies = (cookieName) => {
       const response = await fetch(targetURL, requestOptions)
       const data = await response.json()
   
-      if (data.status === 200) {
+      if (data.status) {
         Swal.fire({
           icon: 'success',
           title: 'Success',
