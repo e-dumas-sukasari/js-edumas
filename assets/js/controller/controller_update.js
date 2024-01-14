@@ -16,11 +16,11 @@ const getTokenFromCookies = (cookieName) => {
       showConfirmButton: false,
       timer: 100000,
     }).then(() => {
-      window.location.href = 'katalog.html'
+      window.location.href = 'pengaduan.html'
     })
   }
   
-  const searchnomorById = async (nomorId) => {
+  const searchnomorByNik = async (nik) => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
@@ -36,7 +36,7 @@ const getTokenFromCookies = (cookieName) => {
     const requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: JSON.stringify({ nomorid: nomorId }),
+      body: JSON.stringify({ nik: nik }),
       redirect: 'follow',
     }
   
@@ -55,22 +55,24 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
-  const populateUpdateForm = (catalogData) => {
+  const populateUpdateForm = (reportData) => {
     const setValue = (id, value) => {
       document.getElementById(id).value = value
     }
   
-    setValue('NomorIdInput', catalogData.nomorid)
-    setValue('TitleInput', catalogData.title)
-    setValue('DeskripsiInput', catalogData.description)
-    setValue('LokasiInput', catalogData.lokasi)
-    setValue('ImageInput', catalogData.image)
-    setValue('StatusInput', catalogData.status)
+    setValue('NoInput', reportData.no)
+    setValue('NikInput', reportData.nik)
+    setValue('NamaInput', reportData.nama)
+    setValue('TitleInput', reportData.title)
+    setValue('DescriptionInput', reportData.description)
+    setValue('DateOccurredInput', reportData.dateOccurred)
+    setValue('ImageInput', reportData.image)
+    setValue('StatusInput', reportData.status)
   
     document.getElementById('updateForm').style.display = 'block'
   }
   
-  const updateCatalog = async (event) => {
+  const updateReport = async (event) => {
     event.preventDefault()
   
     const token = getTokenFromCookies('Login')
@@ -86,16 +88,18 @@ const getTokenFromCookies = (cookieName) => {
     myHeaders.append('Login', token)
     myHeaders.append('Content-Type', 'application/json')
   
-    const statusValue = document.getElementById('StatusInput').value === 'active'
+    const statusValue = document.getElementById('StatusInput').value === 'proses'
   
     const requestOptions = {
       method: 'PUT',
       headers: myHeaders,
       body: JSON.stringify({
-        nomorid: parseInt(document.getElementById('NomorIdInput').value),
+        no: parseInt(document.getElementById('NoInput').value),
+        nik: parseInt(document.getElementById('NikInput').value),
+        nama: document.getElementById('NamaInput').value,
         title: document.getElementById('TitleInput').value,
-        description: document.getElementById('DeskripsiInput').value,
-        lokasi: document.getElementById('LokasiInput').value,
+        description: document.getElementById('DesriptionInput').value,
+        DateOccurred: document.getElementById('DateOccurredInput').value,
         image: document.getElementById('ImageInput').value,
         status: statusValue,
       }),
@@ -108,7 +112,7 @@ const getTokenFromCookies = (cookieName) => {
   
       if (response.ok) {
         showUpdateAlert('Berhasil Update Data', 'success')
-        window.location.href = 'katalog.html'
+        window.location.href = 'pengaduan.html'
       } else {
         showUpdateAlert(data.message || 'Error updating data', 'error')
       }
@@ -118,5 +122,5 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
-  document.getElementById('updateForm').addEventListener('submit', updateCatalog)
+  document.getElementById('updateForm').addEventListener('submit', updateReport)
   
