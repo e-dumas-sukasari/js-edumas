@@ -9,7 +9,7 @@ const getTokenFromCookies = (cookieName) => {
     return null
   }
   
-  const getAllCatalog = async () => {
+  const getAllReport = async () => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
@@ -18,7 +18,7 @@ const getTokenFromCookies = (cookieName) => {
         title: 'Authentication Error',
         text: 'You are not logged in.',
       }).then(() => {
-        window.location.href = 'https://e-dumas-sukasari.my.id/sign/login'
+        window.location.href = 'https://e-dumas-sukasari.my.id/sign/login_user'
       })
       return
     }
@@ -39,7 +39,7 @@ const getTokenFromCookies = (cookieName) => {
       const data = await response.json()
   
       if (data.status === true) {
-        displayCatalogData(data.data, 'CatalogDataBody')
+        displayReportData(data.data, 'ReportDataBody')
       } else {
         Swal.fire({
           icon: 'error',
@@ -52,7 +52,7 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
-  const deleteCatalog = async (nomorId) => {
+  const deleteReport = async (nik) => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
@@ -69,7 +69,7 @@ const getTokenFromCookies = (cookieName) => {
     const requestOptions = {
       method: 'DELETE',
       headers: myHeaders,
-      body: JSON.stringify({ nomorid: nomorId }),
+      body: JSON.stringify({ nik: nik }),
       redirect: 'follow',
     }
   
@@ -81,7 +81,7 @@ const getTokenFromCookies = (cookieName) => {
         Swal.fire({
           icon: 'success',
           title: 'Success',
-          text: 'catalog deleted successfully!',
+          text: 'Report deleted successfully!',
         }).then(() => {
           getAllEmployees()
         })
@@ -98,7 +98,7 @@ const getTokenFromCookies = (cookieName) => {
   }
   
   // Function to handle the delete confirmation
-  const deleteCatalogHandler = (nomorId) => {
+  const deleteReportHandler = (nik) => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -109,56 +109,58 @@ const getTokenFromCookies = (cookieName) => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteCatalog(nomorId)
+        deleteReport(nik)
       }
     })
   }
   
-  const editCatalog = (nomorId) => {
-    window.location.href = `formedit_catalog.html?nomorid=${nomorId}`
+  const editReport = (nik) => {
+    window.location.href = `formedit_report.html?nik=${nik}`
   }
   // Event listener to handle clicks on the table
-  document.getElementById('CatalogDataBody').addEventListener('click', (event) => {
+  document.getElementById('ReportDataBody').addEventListener('click', (event) => {
     const target = event.target
     if (target.classList.contains('edit-link')) {
-      const nomorId = parseInt(target.getAttribute('data-nomorid'))
-      editCatalog(nomorId)
+      const nik = parseInt(target.getAttribute('data-nik'))
+      editReport(nik)
     } else if (target.classList.contains('delete-link')) {
-      const nomorId = parseInt(target.getAttribute('data-nomorid'))
-      deleteCatalogHandler(nomorId)
+      const nik = parseInt(target.getAttribute('data-nik'))
+      deleteReportHandler(nik)
     }
   })
   
-  const displayCatalogData = (catalogData, tableBodyId) => {
-    const catalogDataBody = document.getElementById(tableBodyId)
+  const displayReportData = (reportData, tableBodyId) => {
+    const reportDataBody = document.getElementById(tableBodyId)
   
-    catalogDataBody.innerHTML = ''
+    reportDataBody.innerHTML = ''
   
-    if (catalogData && catalogData.length > 0) {
-      catalogData.forEach((item) => {
+    if (reportData && reportData.length > 0) {
+      reportData.forEach((item) => {
         const newRow = document.createElement('tr')
         newRow.innerHTML = `
-          <td class="px-4 py-3">${item.nomorid}</td>
-          <td class="px-4 py-3">${item.title}</td>
-          <td class="px-4 py-3">${item.description}</td>
-          <td class="px-4 py-3">${item.lokasi}</td>
-          <td class="px-4 py-3">
-            <img src="${item.image}" alt="Catalog Image" style="max-width: 100px; max-height: 100px;">
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.no}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nik}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nama}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.title}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.description}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.dateOccurred}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+          <img src="${item.image}" alt="Report Image" style="max-width: 100px; max-height: 100px;">
           </td>
-          <td class="px-4 py-3">${item.status ? 'Active' : 'Inactive'}</td>
+          <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
           <td class="px-4 py-3">
-            <a href="#" class="edit-link" data-nomorid="${item.nomorid}">Edit</a>
-            <a href="#" class="delete-link" data-nomorid="${item.nomorid}">Delete</a>
+            <a href="#" class="edit-link" data-nik="${item.nik}">Edit</a>
+            <a href="#" class="delete-link" data-nik="${item.nik}">Delete</a>
           </td>
         `
   
-        catalogDataBody.appendChild(newRow)
+        reportDataBody.appendChild(newRow)
       })
     } else {
-      catalogDataBody.innerHTML = `<tr><td colspan="6">No catalog data found.</td></tr>`
+      reportDataBody.innerHTML = `<tr><td colspan="6">No report data found.</td></tr>`
     }
   }
   
-  // Initial fetch of all catalogs
-  getAllCatalog()
+  // Initial fetch of all report
+  getAllReport()
   
