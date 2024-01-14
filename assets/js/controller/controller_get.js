@@ -18,7 +18,7 @@ const getTokenFromCookies = (cookieName) => {
         title: 'Authentication Error',
         text: 'You are not logged in.',
       }).then(() => {
-        window.location.href = 'https://e-dumas-sukasari.my.id/sign/login_user'
+        window.location.href = 'https://e-dumas-sukasari.my.id/sign/login'
       })
       return
     }
