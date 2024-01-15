@@ -99,7 +99,7 @@ const getTokenFromCookies = (cookieName) => {
         nama: document.getElementById('NamaInput').value,
         title: document.getElementById('TitleInput').value,
         description: document.getElementById('DescriptionInput').value,
-        DateOccurred: document.getElementById('DateOccurredInput').value,
+        dateOccurred: document.getElementById('DateOccurredInput').value,
         image: document.getElementById('ImageInput').value,
         status: statusValue,
       }),
