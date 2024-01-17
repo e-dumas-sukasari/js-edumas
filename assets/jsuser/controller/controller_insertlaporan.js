@@ -65,7 +65,7 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
-  document.getElementById('insertForm').addEventListener('submit', insertParkiran)
+  document.getElementById('insertForm').addEventListener('submit', insertReport)
   
   
   
