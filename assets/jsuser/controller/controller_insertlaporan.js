@@ -38,7 +38,6 @@ const getTokenFromCookies = (cookieName) => {
         method: 'POST',
         headers: myHeaders,
         body: JSON.stringify({
-            no: parseInt(document.getElementById('NoInput').value),
             nik: parseInt(document.getElementById('NikInput').value),
             nama: document.getElementById('NamaInput').value,
             title: document.getElementById('TitleInput').value,

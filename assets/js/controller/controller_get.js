@@ -138,7 +138,6 @@ const getTokenFromCookies = (cookieName) => {
       reportData.forEach((item) => {
         const newRow = document.createElement('tr')
         newRow.innerHTML = `
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.no}</td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nik}</td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nama}</td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.title}</td>
