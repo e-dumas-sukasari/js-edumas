@@ -1,10 +1,27 @@
-// Function to make the API request with the token
-async function getUserWithToken() {
-    const token = getTokenFromCookies('Login'); // Get the token dari cookies via parameter
+// Function to extract the token from cookies
+function getTokenFromCookies(cookieName) {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === cookieName) {
+            return value;
+        }
+    }
+    return null;
+}
 
+const getUserWithToken = async () => {
+    const token = getTokenFromCookies('Login')
+  
     if (!token) {
-        alert("token tidak ditemukan");
-        return;
+      Swal.fire({
+        icon: 'warning',
+        title: 'Authentication Error',
+        text: 'You are not logged in.',
+      }).then(() => {
+        window.location.href = 'https://e-dumas-sukasari.my.id/sign/login'
+      })
+      return
     }
 
     const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/GetAll-DataUser';
@@ -20,30 +37,24 @@ async function getUserWithToken() {
     };
 
     try {
-        const response = await fetch(targetURL, requestOptions);
-        const data = await response.json();
-
+        const response = await fetch(targetURL, requestOptions)
+        const data = await response.json()
+    
         if (data.status === true) {
-            displayUserData(data.data);
+          displayUserData(data.data, 'UserDataBody')
         } else {
-            alert(data.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: data.message,
+          })
         }
-    } catch (error) {
-        console.error('Error:', error);
-    }
+      } catch (error) {
+        console.error('Error:', error)
+      }
 }
 
-// Function to extract the token from cookies
-function getTokenFromCookies(cookieName) {
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-        const [name, value] = cookie.trim().split('=');
-        if (name === cookieName) {
-            return value;
-        }
-    }
-    return null;
-}
+
 
 // // Function to display user data in the table
 // function displayUserData(userData) {
@@ -68,30 +79,30 @@ function getTokenFromCookies(cookieName) {
 //     }
 // }
 // Function to display user data in the table
-function displayUserData(userData) {
-    const userDataBody = document.getElementById('UserDataBody');
+// function displayUserData(userData) {
+//     const userDataBody = document.getElementById('UserDataBody');
 
-    userDataBody.innerHTML = ''; // Clear existing rows
+//     userDataBody.innerHTML = ''; // Clear existing rows
 
-    if (userData && userData.length > 0) {
-        userData.forEach(user => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${user.username}</td>
-                <td>${user.password}</td>
-                <td>${user.notelp}</td>
-                <td>${user.role}</td>
-                <td>
-                    <button class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="editUser('${user.username}')">Edit</button>
-                    <button class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="deleteUser('${user.username}')">Delete</button>
-                </td>
-            `;
-            userDataBody.appendChild(newRow);
-        });
-    } else {
-        userDataBody.innerHTML = '<tr><td colspan="8">No user data found.</td></tr>';
-    }
-}
+//     if (userData && userData.length > 0) {
+//         userData.forEach(user => {
+//             const newRow = document.createElement('tr');
+//             newRow.innerHTML = `
+//                 <td>${user.username}</td>
+//                 <td>${user.password}</td>
+//                 <td>${user.notelp}</td>
+//                 <td>${user.role}</td>
+//                 <td>
+//                     <button class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="editUser('${user.username}')">Edit</button>
+//                     <button class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="deleteUser('${user.username}')">Delete</button>
+//                 </td>
+//             `;
+//             userDataBody.appendChild(newRow);
+//         });
+//     } else {
+//         userDataBody.innerHTML = '<tr><td colspan="8">No user data found.</td></tr>';
+//     }
+// }
 
 const deleteUser = async (username) => {
     const token = getTokenFromCookies('Login')
@@ -110,7 +121,7 @@ const deleteUser = async (username) => {
     const requestOptions = {
       method: 'DELETE',
       headers: myHeaders,
-      body: JSON.stringify({ username: user }),
+      body: JSON.stringify({ username: username }),
       redirect: 'follow',
     }
   

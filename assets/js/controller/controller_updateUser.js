@@ -28,7 +28,7 @@ const getTokenFromCookies = (cookieName) => {
       return
     }
   
-    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-Report'
+    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-User'
   
     const myHeaders = new Headers()
     myHeaders.append('Login', token)
