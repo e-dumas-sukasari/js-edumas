@@ -16,11 +16,11 @@ const getTokenFromCookies = (cookieName) => {
       showConfirmButton: false,
       timer: 100000,
     }).then(() => {
-      window.location.href = 'pengaduan.html'
+      window.location.href = 'registrasi.html'
     })
   }
   
-  const searchnomorByNik = async (nik) => {
+  const searchnomorByUsername = async (username) => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
@@ -36,7 +36,7 @@ const getTokenFromCookies = (cookieName) => {
     const requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: JSON.stringify({ nik: nik }),
+      body: JSON.stringify({ username: username }),
       redirect: 'follow',
     }
   
@@ -55,23 +55,20 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
-  const populateUpdateForm = (reportData) => {
+  const populateUpdateForm = (userData) => {
     const setValue = (id, value) => {
       document.getElementById(id).value = value
     }
   
-    setValue('NikInput', reportData.nik)
-    setValue('NamaInput', reportData.nama)
-    setValue('TitleInput', reportData.title)
-    setValue('DescriptionInput', reportData.description)
-    setValue('DateOccurredInput', reportData.dateOccurred)
-    setValue('ImageInput', reportData.image)
-    setValue('StatusInput', reportData.status)
+    setValue('Username', userData.username)
+    setValue('Password', userData.password)
+    setValue('Notelp', userData.notelp)
+
   
     document.getElementById('updateForm').style.display = 'block'
   }
   
-  const updateReport = async (event) => {
+  const updateUser = async (event) => {
     event.preventDefault()
   
     const token = getTokenFromCookies('Login')
@@ -81,7 +78,7 @@ const getTokenFromCookies = (cookieName) => {
       return
     }
   
-    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-Report'
+    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-User'
   
     const myHeaders = new Headers()
     myHeaders.append('Login', token)
@@ -93,12 +90,9 @@ const getTokenFromCookies = (cookieName) => {
       method: 'PUT',
       headers: myHeaders,
       body: JSON.stringify({
-        nik: parseInt(document.getElementById('NikInput').value),
-        nama: document.getElementById('NamaInput').value,
-        title: document.getElementById('TitleInput').value,
-        description: document.getElementById('DescriptionInput').value,
-        dateOccurred: document.getElementById('DateOccurredInput').value,
-        image: document.getElementById('ImageInput').value,
+        username: parseInt(document.getElementById('Username').value),
+        password: document.getElementById('Password').value,
+        notelp: document.getElementById('Notelp').value,
         status: statusValue,
       }),
       redirect: 'follow',
@@ -110,7 +104,7 @@ const getTokenFromCookies = (cookieName) => {
   
       if (response.ok) {
         showUpdateAlert('Berhasil Update Data', 'success')
-        window.location.href = 'pengaduan.html'
+        window.location.href = 'registrasi.html'
       } else {
         showUpdateAlert(data.message || 'Error updating data', 'error')
       }
@@ -120,5 +114,5 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
-  document.getElementById('updateForm').addEventListener('submit', updateReport)
+  document.getElementById('updateForm').addEventListener('submit', updateUser)
   

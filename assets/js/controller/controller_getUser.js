@@ -82,8 +82,8 @@ function displayUserData(userData) {
                 <td>${user.notelp}</td>
                 <td>${user.role}</td>
                 <td>
-                    <button class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="editUser('${user.npm}')">Edit</button>
-                    <button class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="deleteUser('${user.npm}')">Delete</button>
+                    <button class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="editUser('${user.username}')">Edit</button>
+                    <button class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin" onclick="deleteUser('${user.username}')">Delete</button>
                 </td>
             `;
             userDataBody.appendChild(newRow);
@@ -93,58 +93,107 @@ function displayUserData(userData) {
     }
 }
 
-// Function to handle editing a user
-function editUser(npm) {
-    // You can implement the logic to open an edit modal or navigate to an edit page with the user npm
-    alert(`Edit user with npm: ${npm}`);
-}
-
-// Function to handle deleting a user
-function deleteUser(npm) {
-    // You can implement the logic to confirm deletion and make an API request to delete the user
-    const confirmed = confirm(`Are you sure you want to delete user with npm: ${npm}?`);
-
-    if (confirmed) {
-        // Call a function to delete the user (implement this function)
-        deleteUserApiFunction(npm);
-    }
-}
-
-// Function to make an API request to delete a user
-async function deleteUserApiFunction(npm) {
-    const token = getTokenFromCookies('Login');
-
+const deleteUser = async (username) => {
+    const token = getTokenFromCookies('Login')
+  
     if (!token) {
-        alert("Token not found");
-        return;
+      showAlert('Header Login Not Found', 'error')
+      return
     }
-
-    const targetURL = `https://your-api-endpoint/deleteuser?npm=${npm}`;
-
-    const myHeaders = new Headers();
-    myHeaders.append('Login', token);
-
+  
+    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Delete-User'
+  
+    const myHeaders = new Headers()
+    myHeaders.append('Login', token)
+    myHeaders.append('Content-Type', 'application/json')
+  
     const requestOptions = {
-        method: 'DELETE',
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-
-    try {
-        const response = await fetch(targetURL, requestOptions);
-        const data = await response.json();
-
-        if (data.status === true) {
-            // Reload the user data after deletion
-            getUserWithToken();
-            alert('User deleted successfully');
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        console.error('Error:', error);
+      method: 'DELETE',
+      headers: myHeaders,
+      body: JSON.stringify({ username: user }),
+      redirect: 'follow',
     }
-}
+  
+    try {
+      const response = await fetch(targetURL, requestOptions)
+      const data = await response.json()
+  
+      if (data.status) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'User deleted successfully!',
+        }).then(() => {
+          getAllDelete()
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: data.message,
+        })
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+  
+  // Function to handle the delete confirmation
+  const deleteUserHandler = (username) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(username)
+      }
+    })
+  }
+  
+  const editUser = (username) => {
+    window.location.href = `formedit_user.html?username=${username}`
+  }
+  // Event listener to handle clicks on the table
+  document.getElementById('UserDataBody').addEventListener('click', (event) => {
+    const target = event.target
+    if (target.classList.contains('edit-link')) {
+      const username = parseInt(target.getAttribute('data-username'))
+      editUser(username)
+    } else if (target.classList.contains('delete-link')) {
+      const username = parseInt(target.getAttribute('data-username'))
+      deleteUserHandler(username)
+    }
+  })
+  
+  const displayUserData = (userData, tableBodyId) => {
+    const userDataBody = document.getElementById(tableBodyId)
+  
+    userDataBody.innerHTML = ''
+  
+    if (userData && userData.length > 0) {
+      userData.forEach((item) => {
+        const newRow = document.createElement('tr')
+        newRow.innerHTML = `
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.username}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.password}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.notelp}</td>
+
+            <a href="#" class="edit-link" data-username="${item.username}">Edit</a>
+            <a href="#" class="delete-link" data-username="${item.username}">Delete</a>
+          </td>
+        `
+  
+        userDataBody.appendChild(newRow)
+      })
+    } else {
+      userDataBody.innerHTML = `<tr><td colspan="6">No user data found.</td></tr>`
+    }
+  }
 
 
 getUserWithToken();
