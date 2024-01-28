@@ -135,7 +135,7 @@ const deleteUser = async (username) => {
           title: 'Success',
           text: 'User deleted successfully!',
         }).then(() => {
-          getAllDeleteUser()
+            getUserWithToken()
         })
       } else {
         Swal.fire({
