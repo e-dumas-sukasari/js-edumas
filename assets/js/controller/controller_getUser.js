@@ -193,6 +193,7 @@ const deleteUser = async (username) => {
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.username}</td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.password}</td>
           <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.notelp}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.role}</td>
 
             <a href="#" class="edit-link" data-username="${item.username}">Edit</a>
             <a href="#" class="delete-link" data-username="${item.username}">Delete</a>

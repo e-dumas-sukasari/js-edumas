@@ -56,7 +56,7 @@ const getTokenFromCookies = (cookieName) => {
         if (data.status === false) {
             showAlert(data.message, 'error')
         } else {
-            showAlert('Catalog data Report successfully!', 'success')
+            showAlert('Report data Report successfully!', 'success')
             window.location.href = 'user.html'
         }
     } catch (error) {
