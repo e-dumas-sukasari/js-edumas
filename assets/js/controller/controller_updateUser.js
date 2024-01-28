@@ -84,8 +84,6 @@ const getTokenFromCookies = (cookieName) => {
     myHeaders.append('Login', token)
     myHeaders.append('Content-Type', 'application/json')
   
-    const statusValue = document.getElementById('StatusInput').value === 'proses'
-  
     const requestOptions = {
       method: 'PUT',
       headers: myHeaders,
@@ -93,7 +91,6 @@ const getTokenFromCookies = (cookieName) => {
         username: parseInt(document.getElementById('Username').value),
         password: document.getElementById('Password').value,
         notelp: document.getElementById('Notelp').value,
-        status: statusValue,
       }),
       redirect: 'follow',
     }

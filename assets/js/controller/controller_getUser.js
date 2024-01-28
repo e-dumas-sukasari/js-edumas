@@ -34,7 +34,7 @@ const getUserWithToken = async () => {
         method: 'GET',
         headers: myHeaders,
         redirect: 'follow'
-    };
+    }
 
     try {
         const response = await fetch(targetURL, requestOptions)
@@ -135,7 +135,7 @@ const deleteUser = async (username) => {
           title: 'Success',
           text: 'User deleted successfully!',
         }).then(() => {
-          getAllDelete()
+          getAllDeleteUser()
         })
       } else {
         Swal.fire({
