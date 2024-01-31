@@ -118,7 +118,7 @@ const getTokenFromCookies = (cookieName) => {
     window.location.href = `formedit_report.html?_id=${_id}`
   }
   // Event listener to handle clicks on the table
-  document.getElementById('ReportDataBody').addEventListener('click', (event) => {
+  document.getElementById('ReportOneDataBody').addEventListener('click', (event) => {
     const target = event.target
     if (target.classList.contains('edit-link')) {
       const _id = parseInt(target.getAttribute('data-_id'))
