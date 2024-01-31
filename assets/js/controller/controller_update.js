@@ -20,40 +20,44 @@ const getTokenFromCookies = (cookieName) => {
     })
   }
   
-  const searchReportByNik = async (_id) => {
-    const token = getTokenFromCookies('Login')
+  const searchReportByNik = async () => {
+    // Mendapatkan nilai _id dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const _id = urlParams.get('_id');
+  
+    // Mengambil token dari cookies
+    const token = getTokenFromCookies('Login');
   
     if (!token) {
-      showUpdateAlert('Anda Belum Login', 'error')
-      return
+      showUpdateAlert('Anda Belum Login', 'error');
+      return;
     }
   
-    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/GetOneReport'
+    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/GetOneReport?_id=${_id}';
   
-    const myHeaders = new Headers()  
-    myHeaders.append('Login', token)
+    const myHeaders = new Headers();
+    myHeaders.append('Login', token);
   
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',  // Menggunakan metode GET
       headers: myHeaders,
-      body: JSON.stringify({ _id: _id }),
       redirect: 'follow',
-    }
+    };
   
     try {
-      const response = await fetch(targetURL, requestOptions)
-      const data = await response.json()
+      const response = await fetch(targetURL, requestOptions);
+      const data = await response.json();
   
       if (response.ok) {
-        populateUpdateForm(data.data)
+        populateUpdateForm(data.data);
       } else {
-        showUpdateAlert(data.message || 'Error fetching data', 'error')
+        showUpdateAlert(data.message || 'Error fetching data', 'error');
       }
     } catch (error) {
-      console.error('Error:', error)
-      showUpdateAlert('Error fetching data', 'error')
+      console.error('Error:', error);
+      showUpdateAlert('Error fetching data', 'error');
     }
-  }
+  };
   
   const populateUpdateForm = (reportData) => {
     const setValue = (id, value) => {
