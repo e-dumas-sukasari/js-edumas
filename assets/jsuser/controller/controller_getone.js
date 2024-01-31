@@ -1,10 +1,5 @@
 const getOneReport = async (reportId) => {
-    const token = getTokenFromCookies('Login')
   
-    if (!token) {
-      showAlert('Header Login Not Found', 'error')
-      return
-    }
   
     const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/GetOneReport'
   
