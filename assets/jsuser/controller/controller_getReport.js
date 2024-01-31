@@ -131,31 +131,36 @@ const getTokenFromCookies = (cookieName) => {
   
   const displayReportData = (reportData, tableBodyId) => {
     const reportDataBody = document.getElementById(tableBodyId)
-  
+
     reportDataBody.innerHTML = ''
-  
+
     if (reportData && reportData.length > 0) {
-      reportData.forEach((item) => {
-        const newRow = document.createElement('tr')
-        newRow.innerHTML = `
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nik}</td>
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nama}</td>
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.title}</td>
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.description}</td>
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.dateOccurred}</td>
-          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-          <img src="${item.image}" alt="Report Image" style="max-width: 100px; max-height: 100px;">
-          </td>
-          <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
-        `
-  
-        reportDataBody.appendChild(newRow)
-      })
+        reportData.forEach((item) => {
+            // Check if at least one 'tanggapan' field in the object is not null
+            const tanggapanIsNotNull = Object.values(item.tanggapan).some(val => val !== null);
+
+            if (tanggapanIsNotNull) {
+                const newRow = document.createElement('tr')
+                newRow.innerHTML = `
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nik}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nama}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.title}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.description}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.dateOccurred}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                        <img src="${item.image}" alt="Report Image" style="max-width: 100px; max-height: 100px;">
+                    </td>
+                    <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.tanggapan}</td>
+                `
+
+                reportDataBody.appendChild(newRow)
+            }
+        })
     } else {
-      reportDataBody.innerHTML = `<tr><td colspan="6">No report data found.</td></tr>`
+        reportDataBody.innerHTML = `<tr><td colspan="6">No report data found.</td></tr>`
     }
-  }
-  
+}
+
   // Initial fetch of all report
   getAllReport()
-  
