@@ -44,7 +44,6 @@ const getTokenFromCookies = (cookieName) => {
             description: document.getElementById('DescriptionInput').value,
             dateOccurred: document.getElementById('DateOccurredInput').value,
             image: document.getElementById('ImageInput').value,
-            status: document.getElementById('StatusInput').value === 'selesai' ? true : false,
         }),
         redirect: 'follow',
     }
@@ -68,23 +67,5 @@ const getTokenFromCookies = (cookieName) => {
   
   
   
-  // // masih error
-  
-  // import { postWithToken } from "https://jscroot.github.io/api/croot.js";
-  // import { GetDataReport } from "../config/config.js";
-  // import { UrlSubmitReport, token } from "../template/template.js";
-  // import { ResponsePost } from "../config/config.js";
-  
-  // document.addEventListener("DOMContentLoaded", function () {
-  //   const form = document.querySelector("form"); // Sesuaikan dengan struktur HTML Anda
-  //   form.addEventListener("submit", function (event) {
-  //     event.preventDefault();
-  
-  //     const data = GetDataReport();
-  
-  //     // Menggunakan fungsi postWithToken untuk mengirim data ke API dengan token
-  //     postWithToken(UrlSubmitReport, 'Authorization', 'Bearer ' + token, data, ResponsePost);
-  //   });
-  // });
   
   
