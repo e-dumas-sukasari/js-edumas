@@ -121,12 +121,6 @@ const getTokenFromCookies = (cookieName) => {
       showUpdateAlert('Error updating data', 'error')
     }
   }
-  
-  const ReportIdFromURL = new URLSearchParams(window.location.search).get('nik');
-  if (ReportIdFromURL) {
-    document.getElementById('employeeIdInput').value = ReportIdFromURL;
-    searchReportByNik(ReportIdFromURL);
-  }
 
   document.getElementById('updateForm').addEventListener('submit', updateReport)
   
