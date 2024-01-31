@@ -80,7 +80,7 @@ const getTokenFromCookies = (cookieName) => {
         .then(data => {
             console.log('API Response:', data);
   
-            const userData = data.data[0];
+            const userData = data.datas[0];
   
             document.getElementById('Username').value = userData.nik;
             document.getElementById('Password').value = userData.nama;
