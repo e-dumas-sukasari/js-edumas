@@ -121,8 +121,8 @@ const getTokenFromCookies = (cookieName) => {
   document.getElementById('ReportDataBody').addEventListener('click', (event) => {
     const target = event.target
     if (target.classList.contains('edit-link')) {
-      const nik = parseInt(target.getAttribute('data-nik'))
-      editReport(nik)
+      const _id = parseInt(target.getAttribute('data-_id'))
+      editReport(_id)
     } else if (target.classList.contains('delete-link')) {
       const nik = parseInt(target.getAttribute('data-nik'))
       deleteReportHandler(nik)
