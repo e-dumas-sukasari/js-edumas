@@ -101,7 +101,7 @@ const getTokenFromCookies = (cookieName) => {
         dateOccurred: document.getElementById('DateOccurredInput').value,
         image: document.getElementById('ImageInput').value,
         status: statusValue,
-        tanggapan: document.getElementById('Tanggapan'.value),
+        tanggapan: document.getElementById('Tanggapan').value,
       }),
       redirect: 'follow',
     }
