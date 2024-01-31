@@ -16,56 +16,8 @@ const getTokenFromCookies = (cookieName) => {
       showConfirmButton: false,
       timer: 100000,
     }).then(() => {
-      window.location.href = 'registrasi.html'
+      window.location.href = 'pengaduan.html'
     })
-  }
-  
-  const searchnomorByUsername = async (username) => {
-    const token = getTokenFromCookies('Login')
-  
-    if (!token) {
-      showUpdateAlert('Anda Belum Login', 'error')
-      return
-    }
-  
-    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-User'
-  
-    const myHeaders = new Headers()
-    myHeaders.append('Login', token)
-  
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify({ username: username }),
-      redirect: 'follow',
-    }
-  
-    try {
-      const response = await fetch(targetURL, requestOptions)
-      const data = await response.json()
-  
-      if (response.ok) {
-        populateUpdateForm(data.data)
-      } else {
-        showUpdateAlert(data.message || 'Error fetching data', 'error')
-      }
-    } catch (error) {
-      console.error('Error:', error)
-      showUpdateAlert('Error fetching data', 'error')
-    }
-  }
-  
-  const populateUpdateForm = (userData) => {
-    const setValue = (id, value) => {
-      document.getElementById(id).value = value
-    }
-  
-    setValue('Username', userData.username)
-    setValue('Password', userData.password)
-    setValue('Notelp', userData.notelp)
-
-  
-    document.getElementById('updateForm').style.display = 'block'
   }
   
   const updateUser = async (event) => {
@@ -74,8 +26,8 @@ const getTokenFromCookies = (cookieName) => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
-      showUpdateAlert('Anda Belum Login', 'error')
-      return
+        showUpdateAlert('Anda Belum Login', 'error')
+        return
     }
   
     const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-User'
@@ -110,6 +62,40 @@ const getTokenFromCookies = (cookieName) => {
       showUpdateAlert('Error updating data', 'error')
     }
   }
-  
+
   document.getElementById('updateForm').addEventListener('submit', updateUser)
+
+  // Fetch data from the API using a GET request
+  const apiUrl = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/GetOneUser';
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get('_id');
+  
+  // Check if the userId is available
+  if (userId) {
+    const fullApiUrl = `${apiUrl}?_id=${userId}`;
+    console.log('Full API URL:', fullApiUrl);
+
+    fetch(fullApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log('API Response:', data);
+  
+            const userData = data.data[0];
+  
+            document.getElementById('Username').value = userData.nik;
+            document.getElementById('Password').value = userData.nama;
+            document.getElementById('Notelp').value = userData.title;
+
+  
+            // Show the update form
+            document.getElementById('updateForm').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+  }
+
+
+  
+
   
