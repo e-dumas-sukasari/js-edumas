@@ -20,7 +20,7 @@ const getTokenFromCookies = (cookieName) => {
     })
   }
   
-  const searchReportByNik = async (nik) => {
+  const searchReportByNik = async (_id) => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
@@ -36,7 +36,7 @@ const getTokenFromCookies = (cookieName) => {
     const requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: JSON.stringify({ nik: nik }),
+      body: JSON.stringify({ _id: _id }),
       redirect: 'follow',
     }
   

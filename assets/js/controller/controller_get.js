@@ -114,8 +114,8 @@ const getTokenFromCookies = (cookieName) => {
     })
   }
   
-  const editReport = (nik) => {
-    window.location.href = `formedit_report.html?nik=${nik}`
+  const editReport = (_id) => {
+    window.location.href = `formedit_report.html?_id=${_id}`
   }
   // Event listener to handle clicks on the table
   document.getElementById('ReportDataBody').addEventListener('click', (event) => {
