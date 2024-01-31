@@ -82,9 +82,9 @@ const getTokenFromCookies = (cookieName) => {
   
             const userData = data.datas[0];
   
-            document.getElementById('Username').value = userData.nik;
-            document.getElementById('Password').value = userData.nama;
-            document.getElementById('Notelp').value = userData.title;
+            document.getElementById('Username').value = userData.username;
+            document.getElementById('Password').value = userData.password;
+            document.getElementById('Notelp').value = userData.notelp;
 
   
             // Show the update form
