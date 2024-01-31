@@ -121,7 +121,7 @@ const getTokenFromCookies = (cookieName) => {
   document.getElementById('ReportDataBody').addEventListener('click', (event) => {
     const target = event.target
     if (target.classList.contains('edit-link')) {
-      const _id = (target.getAttribute('data-_id'))
+      const _id = parseInt(target.getAttribute('data-_id'))
       editReport(_id)
     } else if (target.classList.contains('delete-link')) {
       const nik = parseInt(target.getAttribute('data-nik'))
@@ -148,7 +148,7 @@ const getTokenFromCookies = (cookieName) => {
           </td>
           <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
           <td class="px-4 py-3">
-            <a href="#" class="edit-link" data-_id="${item._id}">Tanggapan</a>
+            <a href="formedit_report.html?_id=${item._id}">Tanggapan</a>
             <a href="#" class="delete-link" data-nik="${item.nik}">Delete</a>
           </td>
         `
