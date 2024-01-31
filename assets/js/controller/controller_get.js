@@ -114,15 +114,15 @@ const getTokenFromCookies = (cookieName) => {
     })
   }
   
-  const editReport = (nik) => {
-    window.location.href = `formedit_report.html?nik=${nik}`
+  const editReport = (_id) => {
+    window.location.href = `formedit_report.html?_id=${_id}`
   }
   // Event listener to handle clicks on the table
   document.getElementById('ReportDataBody').addEventListener('click', (event) => {
     const target = event.target
     if (target.classList.contains('edit-link')) {
-      const nik = parseInt(target.getAttribute('data-nik'))
-      editReport(nik)
+      const _id = parseInt(target.getAttribute('data-_id'))
+      editReport(_id)
     } else if (target.classList.contains('delete-link')) {
       const nik = parseInt(target.getAttribute('data-nik'))
       deleteReportHandler(nik)
@@ -148,7 +148,7 @@ const getTokenFromCookies = (cookieName) => {
           </td>
           <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
           <td class="px-4 py-3">
-            <a href="#" class="edit-link" data-nik="${item.nik}">Tanggapan</a>
+            <a href="#" class="edit-link" data-_id="${item._id}">Tanggapan</a>
             <a href="#" class="delete-link" data-nik="${item.nik}">Delete</a>
           </td>
         `
