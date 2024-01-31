@@ -67,6 +67,7 @@ const getTokenFromCookies = (cookieName) => {
     setValue('DateOccurredInput', reportData.dateOccurred)
     setValue('ImageInput', reportData.image)
     setValue('StatusInput', reportData.status)
+    setValue('Tanggapan', reportData.Tanggapan)
   
     document.getElementById('updateForm').style.display = 'block'
   }
@@ -100,6 +101,7 @@ const getTokenFromCookies = (cookieName) => {
         dateOccurred: document.getElementById('DateOccurredInput').value,
         image: document.getElementById('ImageInput').value,
         status: statusValue,
+        tanggapan: document.getElementById('Tanggapan'.value),
       }),
       redirect: 'follow',
     }
