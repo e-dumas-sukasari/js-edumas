@@ -44,7 +44,7 @@ const getTokenFromCookies = (cookieName) => {
             description: document.getElementById('DescriptionInput').value,
             dateOccurred: document.getElementById('DateOccurredInput').value,
             image: document.getElementById('ImageInput').value,
-
+            status: document.getElementById('StatusInput').value === 'selesai' ? true : false,
         }),
         redirect: 'follow',
     }

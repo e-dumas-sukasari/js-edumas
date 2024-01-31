@@ -20,7 +20,7 @@ const getTokenFromCookies = (cookieName) => {
     })
   }
   
-  const searchnomorByNik = async (nik) => {
+  const searchReportByNik = async (nik) => {
     const token = getTokenFromCookies('Login')
   
     if (!token) {
@@ -88,7 +88,7 @@ const getTokenFromCookies = (cookieName) => {
     myHeaders.append('Login', token)
     myHeaders.append('Content-Type', 'application/json')
   
-    const statusValue = document.getElementById('StatusInput').value === 'proses'
+    const statusValue = document.getElementById('StatusInput').value === 'selesai'
   
     const requestOptions = {
       method: 'PUT',
@@ -122,5 +122,11 @@ const getTokenFromCookies = (cookieName) => {
     }
   }
   
+  const ReportIdFromURL = new URLSearchParams(window.location.search).get('nik');
+  if (ReportIdFromURL) {
+    document.getElementById('employeeIdInput').value = ReportIdFromURL;
+    searchReportByNik(ReportIdFromURL);
+  }
+
   document.getElementById('updateForm').addEventListener('submit', updateReport)
   
