@@ -148,7 +148,7 @@ const getTokenFromCookies = (cookieName) => {
           </td>
           <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
           <td class="px-4 py-3">
-            <a href="#" class="edit-link" data-_id="${item._id}">Tanggapan</a>
+            <a href="formedit_report.html?_id=${item._id}" >Tanggapan</a>
             <a href="#" class="delete-link" data-nik="${item.nik}">Delete</a>
           </td>
         `
