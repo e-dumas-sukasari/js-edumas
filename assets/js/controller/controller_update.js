@@ -23,7 +23,7 @@ const getTokenFromCookies = (cookieName) => {
   const searchReportByNik = async () => {
     // Mendapatkan nilai _id dari URL
     const urlParams = new URLSearchParams(window.location.search);
-    const _id = urlParams.get('_id');
+    const nik = urlParams.get('nik');
   
     // Mengambil token dari cookies
     const token = getTokenFromCookies('Login');
@@ -33,7 +33,7 @@ const getTokenFromCookies = (cookieName) => {
       return;
     }
   
-    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/GetOneReport?_id=${_id}';
+    const targetURL = "https://asia-southeast2-gisiqbal.cloudfunctions.net/GetOneReportByNik?nik" + nik;
   
     const myHeaders = new Headers();
     myHeaders.append('Login', token);
