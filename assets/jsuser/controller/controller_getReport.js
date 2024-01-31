@@ -39,7 +39,7 @@ const getTokenFromCookies = (cookieName) => {
       const data = await response.json()
   
       if (data.status === true) {
-        displayReportData(data.data, 'ReportDataBody')
+        displayReportData(data.data, 'ReportOneDataBody')
       } else {
         Swal.fire({
           icon: 'error',
