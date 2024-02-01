@@ -40,7 +40,7 @@ const getTokenFromCookies = (cookieName) => {
       method: 'PUT',
       headers: myHeaders,
       body: JSON.stringify({
-        username: parseInt(document.getElementById('Username').value),
+        username: document.getElementById('Username').value,
         password: document.getElementById('Password').value,
         notelp: document.getElementById('Notelp').value,
       }),
