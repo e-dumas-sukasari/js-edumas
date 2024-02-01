@@ -125,7 +125,7 @@ document.getElementById('UserDataBody').addEventListener('click', (event) => {
     const _id = parseInt(target.getAttribute('data-_id'))
     editUser(_id)
   } else if (target.classList.contains('delete-link')) {
-    const username = parseInt(target.getAttribute('data-username'))
+    const username = (target.getAttribute('data-username'))
     deleteUserHandler(username)
   }
 })
