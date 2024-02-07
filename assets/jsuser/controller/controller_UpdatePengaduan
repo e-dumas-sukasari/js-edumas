@@ -33,7 +33,7 @@ const getTokenFromCookies = (cookieName) => {
         return
     }
   
-    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-Report'
+    const targetURL = 'https://asia-southeast2-gisiqbal.cloudfunctions.net/Update-ReportByUser'
   
     const myHeaders = new Headers()
     myHeaders.append('Login', token)
@@ -65,8 +65,8 @@ const getTokenFromCookies = (cookieName) => {
         const data = await response.json()
   
         if (response.ok) {
-            showUpdateAlert('Berhasil Update Data', 'success', () => {
-                window.location.href = 'pengaduan.html';
+            showUpdateAlert('Berhasil Update Data. Pengaduan anda akan direspon dalam 24 jam kedepan, bila tidak ada kemajuan pada pengaduan anda, anda bisa menghubungi nomor bot whatsapp ini yang terhubung dengan petugas langsung +62 822 555 77 080', 'success', () => {
+                window.location.href = 'daftarlaporan.html';
             });
             
         } else {
@@ -105,7 +105,7 @@ const getTokenFromCookies = (cookieName) => {
             document.getElementById('ImageInput').value = reportData.image;
             document.getElementById('StatusInput').value = reportData.status;
             document.getElementById('PihakTerkaitInput').value = reportData.pihakterkait;
-            document.getElementById('Tanggapan').value = '';
+            document.getElementById('Tanggapan').value = reportData.tanggapan;
   
             // Show the update form
             document.getElementById('updateForm').style.display = 'block';
