@@ -130,40 +130,53 @@ document.getElementById('ReportDataBody').addEventListener('click', (event) => {
 })
 
 const displayReportData = (reportData, tableBodyId) => {
-  const reportDataBody = document.getElementById(tableBodyId)
+  const reportDataBody = document.getElementById(tableBodyId);
 
-  reportDataBody.innerHTML = ''
+  reportDataBody.innerHTML = '';
+
+  // Sort reportData by dateOccurred in descending order, then reverse to get ascending order
+  reportData.sort((a, b) => {
+    const dateA = new Date(
+      a.dateOccurred.split('-').reverse().join('-')
+    ); // Convert string date to Date object
+    const dateB = new Date(
+      b.dateOccurred.split('-').reverse().join('-')
+    ); // Convert string date to Date object
+    return dateB - dateA; // Compare dates
+  }).reverse(); // Reverse the sorted array
 
   if (reportData && reportData.length > 0) {
-      reportData.forEach((item) => {
-          // Check if all 'tanggapan' fields in the object are null
-          const tanggapanIsNull = Object.values(item.tanggapan).every(val => val === null);
+    reportData.forEach((item) => {
+      // Check if all 'tanggapan' fields in the object are null
+      const tanggapanIsNull = Object.values(item.tanggapan).every(
+        (val) => val === null
+      );
 
-          if (tanggapanIsNull) {
-              const newRow = document.createElement('tr')
-              newRow.innerHTML = `
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nik}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nama}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.title}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.description}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.dateOccurred}</td>
-                  <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                      <img src="${item.image}" alt="Report Image" style="max-width: 100px; max-height: 100px;">
-                  </td>
-                  <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
-                  <td class="px-4 py-3">
-                      <a href="formedit_report.html?_id=${item._id}" >Tanggapan</a>
-                      <a href="#" class="delete-link" data-nik="${item.nik}">Delete</a>
-                  </td>
-              `
+      if (tanggapanIsNull) {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nik}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.nama}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.title}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.description}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">${item.dateOccurred}</td>
+          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+              <img src="${item.image}" alt="Report Image" style="max-width: 100px; max-height: 100px;">
+          </td>
+          <td class="px-4 py-3">${item.status ? 'Selesai' : 'Proses'}</td>
+          <td class="px-4 py-3">
+              <a href="formedit_report.html?_id=${item._id}" >Tanggapan</a>
+              <a href="#" class="delete-link" data-nik="${item.nik}">Delete</a>
+          </td>
+        `;
 
-              reportDataBody.appendChild(newRow)
-          }
-      })
+        reportDataBody.appendChild(newRow);
+      }
+    });
   } else {
-      reportDataBody.innerHTML = `<tr><td colspan="6">No report data found.</td></tr>`
+    reportDataBody.innerHTML = `<tr><td colspan="6">No report data found.</td></tr>`;
   }
-}
+};
 
 
 // Initial fetch of all report
